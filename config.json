@@ -1,0 +1,33 @@
+{
+  "scraper": {
+    "checkInterval": "0 */6 * * *",
+    "languages": ["javascript", "python", "go", "rust"],
+    "timeframes": ["daily", "weekly"]
+  },
+  "notifications": {
+    "discord": {
+      "enabled": false,
+      "webhookUrl": ""
+    },
+    "telegram": {
+      "enabled": false,
+      "botToken": "",
+      "chatId": ""
+    },
+    "email": {
+      "enabled": false,
+      "smtp": {
+        "host": "",
+        "port": 587,
+        "user": "",
+        "pass": ""
+      },
+      "to": ""
+    }
+  },
+  "filters": {
+    "minStars": 100,
+    "excludeLanguages": [],
+    "keywords": ["ai", "machine learning", "bot", "crypto", "web3"]
+  }
+}
