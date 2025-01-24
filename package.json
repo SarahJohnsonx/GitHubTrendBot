@@ -4,8 +4,9 @@
   "description": "A smart bot that tracks GitHub trending repositories",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node bot.js",
+    "dev": "nodemon bot.js",
+    "test": "node index.js"
   },
   "keywords": ["github", "trending", "bot", "notifications"],
   "author": "SarahJohnsonx",
