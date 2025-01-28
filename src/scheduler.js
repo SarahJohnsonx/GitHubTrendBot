@@ -1,12 +1,14 @@
 const cron = require('node-cron');
 const GitHubScraper = require('./scraper');
 const NotificationManager = require('./notificationManager');
+const Storage = require('./storage');
 
 class Scheduler {
     constructor(config) {
         this.config = config;
         this.scraper = new GitHubScraper();
         this.notificationManager = new NotificationManager(config);
+        this.storage = new Storage();
         this.jobs = [];
     }
 
@@ -49,7 +51,21 @@ class Scheduler {
             console.log(`Found ${uniqueRepos.length} unique trending repositories`);
 
             if (uniqueRepos.length > 0) {
-                await this.notificationManager.notifyTrendingRepos(uniqueRepos);
+                this.storage.saveHistory(uniqueRepos);
+                
+                uniqueRepos.forEach(repo => {
+                    this.storage.markRepoAsSeen(repo.name);
+                });
+
+                const newRepos = uniqueRepos.filter(repo => 
+                    this.storage.isRepoNew(repo.name, 48)
+                );
+                
+                console.log(`${newRepos.length} new repositories found`);
+                
+                if (newRepos.length > 0) {
+                    await this.notificationManager.notifyTrendingRepos(newRepos);
+                }
             }
 
         } catch (error) {
